@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Psychologists</title>
+    <!-- Include Bootstrap CSS here -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'star_ratings/css/star-ratings.css' %}">
+    <script src="{% static 'star_ratings/js/dist/star-ratings.min.js' %}"></script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Delete Psychologist</h2>
+        <p>Are you sure you want to delete {{ psychologist.name }}?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+    
+    <!-- Include Bootstrap JS and jQuery here -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Psychologists</title>
+    <!-- Include Bootstrap CSS here -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'star_ratings/css/star-ratings.css' %}">
+    <script src="{% static 'star_ratings/js/dist/star-ratings.min.js' %}"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Psychological App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'homepage' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about_us' %}">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'appointments' %}">Appointments</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Psychologists <span class="sr-only">(current)</span></a>
+                </li>
+                {% if not request.user.is_superuser %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
+                    </li>
+                {% endif %}
+            </ul>
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ request.user.username }}
+                    </a>
+                    
+                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                        {% if not request.user.is_superuser %}
+                            <a class="dropdown-item" href="{% url 'my_appointments' %}">My Appointments</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                        {% endif %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    {% load ratings %} <!-- Load the ratings tag library -->
+    
+    {% load ratings %}
+
+    <div class="container mt-4">
+        <h2>Psychologists</h2>
+        {% if user.is_authenticated %}
+            {% if user.is_superuser %}
+                <a href="{% url 'add_psychologist' %}" class="btn btn-primary mb-2">Add Psychologist</a>
+            {% endif %}
+        {% endif %}
+        <div class="row">
+            {% for psychologist in psychologists_data %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ psychologist.image.url }}" alt="{{ psychologist.name }}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ psychologist.name }}</h5>
+                            <p class="card-text">{{ psychologist.therapy_type }}</p>
+                            <p class="card-text">{{ psychologist.cv }}</p>
+                            {% if not user.is_superuser %}
+                            <a href="{% url 'submit_review' psychologist_id=psychologist.id %}" class="btn btn-primary">Write a Review</a>
+                        {% endif %}
+
+                            {% if user.is_authenticated %}
+                            {% if user.is_superuser %}
+                                <a href="{% url 'edit_psychologist' psychologist_id=psychologist.id %}" class="btn btn-primary mb-2">Edit Psychologist</a>
+                                <a href="{% url 'delete_psychologist' psychologist_id=psychologist.id %}" class="btn btn-primary mb-2">Delete Psychologist</a>
+                            {% endif %}
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <!-- Include Bootstrap JS and jQuery here -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

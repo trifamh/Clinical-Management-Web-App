@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About Us</title>
+    <!-- Include Bootstrap CSS here -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Psychological App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'homepage' %}">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">About Us <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'appointments' %}">Appointments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'psychologists' %}">Psychologists</a>
+                </li>
+                {% if not request.user.is_superuser %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ request.user.username }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                        {% if not request.user.is_superuser %}
+                        <a class="dropdown-item" href="{% url 'my_appointments' %}">My Appointments</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                    {% endif %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2>About Us</h2>
+        <p>At [Hospital Name], we are more than just a psychological hospital; we are a beacon of hope for countless individuals grappling with mental health challenges. Founded in [Year], our institution stands as a testament to the resilience, dedication, and pioneering spirit of [Founder’s Name], a renowned psychologist who believed in the transformative power of compassionate care.
+
+            Nestled in the heart of [City/Location], our facility has grown from a humble clinic into a state-of-the-art psychological hospital, renowned for its cutting-edge treatments and holistic care approach. Over the decades, we have witnessed the evolving landscape of mental health care and have continually adapted, ensuring that our treatments remain both innovative and deeply rooted in evidence-based practices.
+            
+            Our staff is our greatest asset. Comprising a diverse team of psychologists, therapists, support staff, and researchers, we pride ourselves on our collaborative approach to care. We believe that mental health treatment is not a one-size-fits-all endeavor. Every individual has a unique story, and our mission is to hear, understand, and support that story towards a path of healing and growth.
+            
+            Beyond treatments, [Hospital Name] has been at the forefront of mental health research. Our research division works tirelessly, aiming to decipher the complexities of the human mind and uncover new methodologies for treatment. It's this commitment to advancement that keeps us at the cutting edge of psychological care.
+            
+            Community lies at the heart of our ethos. We actively engage with our local community, offering workshops, support groups, and educational sessions, ensuring mental health awareness and resources are accessible to all.
+            
+            As we reflect on our rich history, we are filled with gratitude for the trust our community has placed in us. Our journey, from a single-room clinic to a leading psychological hospital, is a story of passion, dedication, and the unwavering belief that everyone deserves a chance at mental well-being.
+            
+            Join us as we continue to pave the way for a brighter, healthier future, one mind at a time.
+            
+            Remember to replace [placeholders] with appropriate names, dates, and details specific to your institution.</p>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery here -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
